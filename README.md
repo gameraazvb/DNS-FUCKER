@@ -30,7 +30,7 @@ pkg install python git nmap clang
 
 # 2. Clone the repository
 git clone https://github.com/gameraazvb/DNS-FUCKER.git
-cd DNS-FUCKER-TERMUX
+cd DNS-FUCKER
 
 # 3. Build Masscan (optional but recommended)
 git clone https://github.com/robertdavidgraham/masscan
