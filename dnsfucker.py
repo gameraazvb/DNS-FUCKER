@@ -1,6 +1,6 @@
-    # DNS FUCKER Toolkit by lyn4x
+# DNS FUCKER Toolkit by lyn4x
 
-# Auto-install dependencies if missing
+# Auto-install Python dependencies
 try:
     import pyfiglet
     from termcolor import colored
@@ -11,9 +11,23 @@ try:
     import requests
 except ImportError:
     import os
-    print("Installing missing dependencies...")
+    print("Installing missing Python dependencies...")
     os.system("pip install pyfiglet termcolor dnspython python-whois requests")
-    print("Dependencies installed. Please re-run the script.")
+
+# Check for external tools
+import shutil
+def check_tool(tool):
+    return shutil.which(tool) is not None
+
+missing_tools = []
+for tool in ["masscan", "ettercap", "bettercap"]:
+    if not check_tool(tool):
+        missing_tools.append(tool)
+
+if missing_tools:
+    print(colored(f"Installing missing tools: {', '.join(missing_tools)}", "yellow"))
+    os.system("apt update && apt install -y " + " ".join(missing_tools))
+    print(colored("Tools installed. Please re-run the script.", "green"))
     exit()
 
 import time
@@ -42,6 +56,8 @@ def show_menu():
     print(colored("7. DNS Vulnerability Finder", "yellow"))
     print(colored("8. Nmap Scan", "yellow"))
     print(colored("9. Masscan Scan", "yellow"))
+    print(colored("10. Ettercap Sniffing", "yellow"))
+    print(colored("11. Bettercap Sniffing", "yellow"))
     print(colored("0. Exit", "yellow"))
 
 def resolve_domain():
@@ -65,7 +81,7 @@ def view_log():
 def about():
     print(colored("\nTool: DNS FUCKER", "cyan"))
     print(colored("Author: lyn4x", "cyan"))
-    print(colored("Version: 2.0", "cyan"))
+    print(colored("Version: 2.2", "cyan"))
     print(colored("Use responsibly. Designed for DNS validation, scanning, and education.", "cyan"))
 
 def whois_lookup():
@@ -137,8 +153,19 @@ def nmap_scan():
 def masscan_scan():
     target = input(colored("\nEnter IP range for Masscan (e.g. 192.168.1.0/24): ", "blue"))
     ports = input(colored("Enter ports to scan (e.g. 80,443): ", "blue"))
-    print(colored(f"[•] Running Masscan on {target} ports {ports}...", "yellow"))
-    os.system(f"masscan {target} -p{ports} --rate=1000")
+    rate = input(colored("Enter scan rate (packets/sec, e.g. 1000): ", "blue"))
+    print(colored(f"[•] Running Masscan on {target} ports {ports} at {rate} pps...", "yellow"))
+    os.system(f"masscan {target} -p{ports} --rate={rate}")
+
+def ettercap_sniff():
+    iface = input(colored("\nEnter network interface (e.g. wlan0): ", "blue"))
+    print(colored(f"[•] Launching Ettercap on {iface}...", "yellow"))
+    os.system(f"ettercap -T -i {iface}")
+
+def bettercap_sniff():
+    iface = input(colored("\nEnter network interface (e.g. wlan0): ", "blue"))
+    print(colored(f"[•] Launching Bettercap on {iface}...", "yellow"))
+    os.system(f"bettercap -iface {iface}")
 
 # Main loop
 while True:
@@ -162,8 +189,13 @@ while True:
         nmap_scan()
     elif choice == "9":
         masscan_scan()
+    elif choice == "10":
+        ettercap_sniff()
+    elif choice == "11":
+        bettercap_sniff()
     elif choice == "0":
         print(colored("Exiting... Stay ethical, lyn4x!", "green"))
         break
     else:
         print(colored("Invalid choice. Try again.", "red"))
+
