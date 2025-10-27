@@ -1,14 +1,24 @@
-# DNS FUCKER Toolkit by lyn4x
-import pyfiglet
-from termcolor import colored
+    # DNS FUCKER Toolkit by lyn4x
+
+# Auto-install dependencies if missing
+try:
+    import pyfiglet
+    from termcolor import colored
+    import dns.resolver
+    import dns.query
+    import dns.zone
+    import whois
+    import requests
+except ImportError:
+    import os
+    print("Installing missing dependencies...")
+    os.system("pip install pyfiglet termcolor dnspython python-whois requests")
+    print("Dependencies installed. Please re-run the script.")
+    exit()
+
 import time
 import os
 import socket
-import dns.resolver
-import dns.query
-import dns.zone
-import whois
-import requests
 
 # Clear screen
 os.system('clear')
