@@ -37,6 +37,7 @@ git clone https://github.com/robertdavidgraham/masscan
 cd masscan
 make
 cd ..
+and use --rate for custom request dont go eg:10000000000 it will cause problem 
 
 # 4. Run the tool
 python dnsfucker.py
