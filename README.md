@@ -48,8 +48,8 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3 git nmap clang make
 
 # 2. Clone the repository
-git clone https://github.com/gameraazvb/DNS-FUCKER-TERMUX.git
-cd DNS-FUCKER-TERMUX
+git clone https://github.com/gameraazvb/DNS-FUCKER.git
+cd DNS-FUCKER
 
 # 3. Build Masscan (optional but recommended)
 git clone https://github.com/robertdavidgraham/masscan
