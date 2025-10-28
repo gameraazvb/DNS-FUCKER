@@ -5,6 +5,20 @@ import socket
 import shutil
 import subprocess
 
+# Detect environment
+def is_termux():
+    return os.path.exists("/data/data/com.termux/files/usr/bin/pkg")
+
+def is_kali():
+    return os.path.exists("/etc/os-release") and "Kali" in open("/etc/os-release").read()
+
+# Safe pip install for Kali
+def safe_pip_install(packages):
+    args = [sys.executable, "-m", "pip", "install"] + packages
+    if is_kali():
+        args.append("--break-system-packages")
+    subprocess.run(args)
+
 # Auto-install Python dependencies
 def install_python_deps():
     required = ["pyfiglet", "termcolor", "dnspython", "python-whois", "requests"]
@@ -13,7 +27,7 @@ def install_python_deps():
             __import__(pkg if pkg != "python-whois" else "whois")
     except ImportError:
         print("Installing missing Python dependencies...")
-        subprocess.run([sys.executable, "-m", "pip", "install"] + required)
+        safe_pip_install(required)
 
 # Check and install external tools
 def check_tool(tool):
@@ -24,7 +38,8 @@ def install_external_tools():
     missing = [t for t in tools if not check_tool(t)]
     if missing:
         print(colored(f"Installing missing tools: {', '.join(missing)}", "yellow"))
-        result = subprocess.run(["apt", "install", "-y"] + missing)
+        installer = "pkg" if is_termux() else "apt"
+        result = subprocess.run([installer, "install", "-y"] + missing)
         if result.returncode != 0:
             fallback_repos = {
                 "masscan": "https://github.com/robertdavidgraham/masscan.git",
@@ -37,15 +52,8 @@ def install_external_tools():
         print(colored("Tools installed. Please re-run the script.", "green"))
         exit()
 
-# Setup
-def setup():
-    install_python_deps()
-    install_external_tools()
-
-# Start setup
-setup()
-
 # Imports after setup
+install_python_deps()
 import pyfiglet
 from termcolor import colored
 import dns.resolver
@@ -53,6 +61,9 @@ import dns.query
 import dns.zone
 import whois
 import requests
+
+# Setup tools
+install_external_tools()
 
 # Clear screen
 os.system('clear')
@@ -80,7 +91,7 @@ def show_menu():
     print(colored("11. Bettercap Sniffing", "yellow"))
     print(colored("0. Exit", "yellow"))
 
-# [Functions for each menu item remain unchanged — reuse from your original script]
+# [Insert your original function definitions here: resolve_domain(), view_log(), etc.]
 
 # Main loop
 while True:
