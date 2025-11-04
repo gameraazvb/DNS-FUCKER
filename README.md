@@ -1,6 +1,6 @@
-# 🔥 DNS FUCKER Toolkit by lyn4x
+# 🔥 DNS TOOL Toolkit by lyn4x
 
-A modular Termux-based cybersecurity tool for DNS FUCKING, scanning, and ethical reconnaissance. Built for learners, educators, and professionals who want fast, reliable DNS insights with a splash of style.
+A modular Termux-based cybersecurity tool for DNS TEST, scanning, and ethical reconnaissance. Built for learners, educators, and professionals who want fast, reliable DNS insights with a splash of style.
 
 ---
 
