@@ -29,8 +29,8 @@ pkg update && pkg upgrade
 pkg install python git nmap clang
 
 # 2. Clone the repository
-git clone https://github.com/gameraazvb/DNS-FUCKER.git
-cd DNS-FUCKER
+git clone https://github.com/gameraazvb/DNS-TOOL.git
+cd DNS-TOOL
 
 # 3. Build Masscan (optional but recommended)
 git clone https://github.com/robertdavidgraham/masscan
@@ -48,8 +48,8 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3 git nmap clang make
 
 # 2. Clone the repository
-git clone https://github.com/gameraazvb/DNS-FUCKER.git
-cd DNS-FUCKER
+git clone https://github.com/gameraazvb/DNS-TOOL.git
+cd DNS-TOOL
 
 # 3. Build Masscan (optional but recommended)
 git clone https://github.com/robertdavidgraham/masscan
